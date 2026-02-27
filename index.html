@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generator Berita Acara — Zuma Jatim</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      min-height: 100vh;
+      padding: 32px 16px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      max-width: 740px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .header-logo {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: #fff;
+      border: 3px solid #fff;
+      padding: 4px 14px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .header-text h1 { font-size: 17px; font-weight: 700; }
+    .header-text p  { font-size: 12px; opacity: 0.55; margin-top: 3px; letter-spacing: 0.5px; }
+
+    /* ── BODY ── */
+    .form-body { padding: 32px 36px 36px; }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #6366f1;
+      margin: 28px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0e7ff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-title:first-child { margin-top: 0; }
+
+    /* ── FORM ROWS ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 8px 14px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .form-row label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .form-row input,
+    .form-row select {
+      padding: 9px 13px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 9px;
+      font-size: 13px;
+      color: #111827;
+      background: #fafafa;
+      transition: border-color .2s, box-shadow .2s;
+      width: 100%;
+    }
+    .form-row input:focus,
+    .form-row select:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99,102,241,.12);
+      background: #fff;
+    }
+    .form-row select { cursor: pointer; }
+
+    /* ── STOK TABLE ── */
+    .stok-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+    .stok-table th {
+      background: #f3f4f6;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: #4b5563;
+      text-align: center;
+      border: 1px solid #e5e7eb;
+    }
+    .stok-table th:first-child { text-align: left; }
+    .stok-table td {
+      border: 1px solid #e5e7eb;
+      padding: 7px 10px;
+    }
+    .stok-table td:first-child {
+      font-weight: 600;
+      font-size: 13px;
+      color: #111827;
+    }
+    .stok-table input[type=number] {
+      width: 100%;
+      padding: 7px 8px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 7px;
+      font-size: 13px;
+      text-align: center;
+      background: #fffbeb;
+    }
+    .stok-table input[type=number]:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99,102,241,.1);
+    }
+
+    /* ── BUTTONS ── */
+    .btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .btn-all { grid-column: 1 / -1; }
+    .btn {
+      padding: 13px 16px;
+      border: none;
+      border-radius: 11px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+      letter-spacing: 0.2px;
+      text-align: center;
+    }
+    .btn:hover  { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.12); }
+    .btn:active { transform: translateY(0); }
+    .btn-so  { background: linear-gradient(135deg,#3b82f6,#1d4ed8); color:#fff; }
+    .btn-adj { background: linear-gradient(135deg,#10b981,#059669); color:#fff; }
+    .btn-all-style { background: linear-gradient(135deg,#f59e0b,#d97706); color:#fff; }
+
+    .note {
+      margin-top: 20px;
+      font-size: 11.5px;
+      color: #9ca3af;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════
+       PRINT / DOCUMENT STYLES (dipakai di popup)
+    ═══════════════════════════════════════════════ */
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-logo">ZUMA</div>
+    <div class="header-text">
+      <h1>Generator Berita Acara — Jatim</h1>
+      <p>Stock Opname &amp; Adjustment · Isi form → klik tombol → cetak PDF</p>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="form-body">
+
+    <!-- Informasi -->
+    <div class="section-title">📌 Informasi Pelaksanaan</div>
+
+    <div class="form-row">
+      <label>Toko</label>
+      <select id="toko"><option value="">— Pilih Toko —</option></select>
+    </div>
+    <div class="form-row">
+      <label>Pemroses</label>
+      <select id="pemroses"><option value="">— Pilih Pemroses —</option></select>
+    </div>
+    <div class="form-row">
+      <label>Tgl Pelaksanaan</label>
+      <input type="date" id="tglPelaksanaan" />
+    </div>
+    <div class="form-row">
+      <label>Tgl Cut Off</label>
+      <input type="date" id="tglCutOff" />
+    </div>
+    <div class="form-row">
+      <label>Nomor Urut BA</label>
+      <input type="text" id="nomorUrut" placeholder="Contoh: 001" />
+    </div>
+
+    <!-- Hasil SO -->
+    <div class="section-title">📊 Hasil Stock Opname</div>
+
+    <table class="stok-table">
+      <thead>
+        <tr>
+          <th style="width:42%">Komponen</th>
+          <th>Stok Fisik</th>
+          <th>Stok Sistem</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sandal</td>       <td><input type="number" id="fSandal" value="0" min="0"/></td><td><input type="number" id="sSandal" value="0" min="0"/></td></tr>
+        <tr><td>Shopping Bag</td> <td><input type="number" id="fSB"     value="0" min="0"/></td><td><input type="number" id="sSB"     value="0" min="0"/></td></tr>
+        <tr><td>Paper Bag</td>    <td><input type="number" id="fPB"     value="0" min="0"/></td><td><input type="number" id="sPB"     value="0" min="0"/></td></tr>
+        <tr><td>Box Luca Luna</td><td><input type="number" id="fBox"    value="0" min="0"/></td><td><input type="number" id="sBox"    value="0" min="0"/></td></tr>
+      </tbody>
+    </table>
+
+    <!-- BA Adjustment extra -->
+    <div class="section-title">📝 Khusus BA Adjustment</div>
+
+    <div class="form-row">
+      <label>Nomor Penyesuaian</label>
+      <input type="text" id="noPenyesuaian" placeholder="Nomor dari sistem Accurate" />
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-group">
+      <button class="btn btn-so"  onclick="generateSO()">📄 BA Stock Opname</button>
+      <button class="btn btn-adj" onclick="generateAdj()">📄 BA Adjustment</button>
+      <button class="btn btn-all-style btn-all btn" onclick="generateAll()">🚀 Generate Keduanya Sekaligus</button>
+    </div>
+
+    <p class="note">Setelah dokumen terbuka → klik tombol <strong>Cetak / Simpan PDF</strong> atau tekan <strong>Ctrl+P</strong></p>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════════ -->
+<script>
+
+// ──────────────────────────────────────────────────────────────────
+// DATA MASTER
+// ──────────────────────────────────────────────────────────────────
+const TOKO = {
+  'TUNJUNGAN PLAZA': { spg: ['Fahriyatul Auliyah', 'Diah Dwipriliawati', 'Naura Yumna Devani'],         as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  'GALAXY MALL':     { spg: ['Nana Nurdiana', 'Pricillia Alexandri'],                                  as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  'PTC':             { spg: ['Ratna Yunita', 'Luvita Chatharina Sihombing'],                            as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  'MATOS':           { spg: ['Herlinata Sholikhati', 'Vela Rodhiana'],                                  as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  'MOG':             { spg: ['Yayuk Kritianingsih', 'Dilla Rahma Safira'],                              as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  'LIPPO BATU':      { spg: ['Tarina Rahman', "Muhammad Dhiya'ul Hak Al Badar"],                       as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  'LIPPO SIDOARJO':  { spg: ['Bella Aprilia', 'Laily Wahyu Annisa', 'Fariansyah Satrio Pangestu'],     as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  'ROYAL PLAZA':     { spg: ['Sarah Amelia', 'Putri Aida Permatasari'],                                 as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  'ICON GRESIK':     { spg: ['Neng Massila', 'Siti Nuryunidha Marsha'],                                 as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  'CITO':            { spg: ['Raditya Fian Fathur Rahman', 'Reghyta Orlin'],                            as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  'SUNRISE MALL':    { spg: ['Vinda Kurnia Rahmawati', 'Gaby Aprillia Grazeila'],                       as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+};
+
+const PEMROSES_DATA = {
+  'Galuh Maharani':      'Staff Inventory Control',
+  'Nabila Amalia Putri': 'Staff Inventory Control',
+};
+
+// Populate dropdowns
+(function init() {
+  const tSel = document.getElementById('toko');
+  Object.keys(TOKO).forEach(n => tSel.insertAdjacentHTML('beforeend', `<option value="${n}">${n}</option>`));
+  const pSel = document.getElementById('pemroses');
+  Object.keys(PEMROSES_DATA).forEach(n => pSel.insertAdjacentHTML('beforeend', `<option value="${n}">${n}</option>`));
+})();
+
+// ──────────────────────────────────────────────────────────────────
+// HELPERS
+// ──────────────────────────────────────────────────────────────────
+const HARI  = ['Minggu','Senin','Selasa','Rabu','Kamis',"Jum'at",'Sabtu'];
+const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+function parseDate(str) {
+  const d = new Date(str + 'T00:00:00');
+  return d;
+}
+function fmtHariTgl(str) {
+  const d = parseDate(str);
+  return `${HARI[d.getDay()]}, ${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`;
+}
+function fmtTgl(str) {
+  const d = parseDate(str);
+  return `${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`;
+}
+function getBulanTahun(str) {
+  const d = parseDate(str);
+  return { bulan: String(d.getMonth()+1).padStart(2,'0'), tahun: d.getFullYear() };
+}
+function toTitleCase(s) {
+  return s.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+function num(id) { return parseInt(document.getElementById(id).value) || 0; }
+function val(id) { return document.getElementById(id).value; }
+
+function getFormData() {
+  return {
+    namaToko:       val('toko').trim().toUpperCase(),
+    namaPemroses:   val('pemroses').trim(),
+    tglPelaksanaan: val('tglPelaksanaan'),
+    tglCutOff:      val('tglCutOff'),
+    nomorUrut:      val('nomorUrut').trim(),
+    fSandal: num('fSandal'), sSandal: num('sSandal'),
+    fSB:     num('fSB'),     sSB:     num('sSB'),
+    fPB:     num('fPB'),     sPB:     num('sPB'),
+    fBox:    num('fBox'),    sBox:    num('sBox'),
+    noPenyesuaian: val('noPenyesuaian').trim(),
+  };
+}
+
+function validate(d) {
+  if (!d.namaToko)       { alert('⚠️ Pilih Toko terlebih dahulu!'); return false; }
+  if (!d.namaPemroses)   { alert('⚠️ Pilih Pemroses terlebih dahulu!'); return false; }
+  if (!d.tglPelaksanaan) { alert('⚠️ Isi Tanggal Pelaksanaan!'); return false; }
+  if (!d.nomorUrut)      { alert('⚠️ Isi Nomor Urut BA!'); return false; }
+  if (!TOKO[d.namaToko]) { alert(`⚠️ Toko "${d.namaToko}" tidak ditemukan!`); return false; }
+  return true;
+}
+
+function buildData(d) {
+  const toko = TOKO[d.namaToko];
+  const { bulan, tahun } = getBulanTahun(d.tglPelaksanaan);
+  const lokasi = 'Zuma ' + toTitleCase(d.namaToko);
+  return {
+    toko, lokasi,
+    spg: toko.spg,
+    nomorSO:  `${d.nomorUrut}/BASO/RETAIL/DDD/${bulan}/${tahun}`,
+    nomorAdj: `${d.nomorUrut}/BAA/RETAIL/DDD/${bulan}/${tahun}`,
+    hariTanggal:    fmtHariTgl(d.tglPelaksanaan),
+    tglPelaksanaan: fmtTgl(d.tglPelaksanaan),
+    tglCutOff:      d.tglCutOff ? fmtTgl(d.tglCutOff) : '-',
+    namaPemroses:   d.namaPemroses,
+    jabatanPemroses: PEMROSES_DATA[d.namaPemroses] || 'Staff Inventory Control',
+    noPenyesuaian:  d.noPenyesuaian || '-',
+    stok: {
+      sandal: { f: d.fSandal, s: d.sSandal, sel: d.fSandal - d.sSandal },
+      sb:     { f: d.fSB,     s: d.sSB,     sel: d.fSB     - d.sSB     },
+      pb:     { f: d.fPB,     s: d.sPB,     sel: d.fPB     - d.sPB     },
+      box:    { f: d.fBox,    s: d.sBox,    sel: d.fBox    - d.sBox    },
+    },
+  };
+}
+
+// ──────────────────────────────────────────────────────────────────
+// DOCUMENT TEMPLATE STYLES
+// ──────────────────────────────────────────────────────────────────
+const DOC_STYLE = `
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #000;
+    background: #fff;
+  }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 20mm 20mm 16mm;
+  }
+  h1.doc-title {
+    font-size: 13pt;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .doc-nomor {
+    text-align: center;
+    font-size: 11pt;
+    margin-bottom: 18px;
+  }
+  .doc-para { margin-bottom: 14px; text-align: justify; }
+
+  /* Info fields table */
+  .info-tbl { width:100%; border-collapse:collapse; margin-bottom:16px; }
+  .info-tbl td { padding: 2.5px 6px; vertical-align: top; font-size: 10.5pt; }
+  .info-tbl td:first-child { width: 175px; white-space: nowrap; }
+  .info-tbl td:nth-child(2) { width: 12px; text-align:center; }
+
+  /* Stok results table */
+  .stok-tbl { width:100%; border-collapse:collapse; margin-bottom:16px; }
+  .stok-tbl th, .stok-tbl td {
+    border: 1px solid #000;
+    padding: 5px 8px;
+    text-align: center;
+    font-size: 10.5pt;
+  }
+  .stok-tbl th { background: #f0f0f0; font-weight: bold; }
+  .stok-tbl td:first-child { text-align: left; }
+
+  /* Signatures */
+  .sig-date { text-align: right; margin: 18px 0 16px; font-size: 10.5pt; }
+  .sig-group-label { font-weight: bold; font-size: 10.5pt; margin-bottom: 4px; }
+  .sig-row { display: flex; gap: 28px; margin-bottom: 22px; flex-wrap: wrap; }
+  .sig-block { text-align: center; min-width: 130px; }
+  .sig-space { height: 54px; }
+  .sig-line {
+    border-top: 1px solid #000;
+    padding-top: 4px;
+    font-size: 10pt;
+    display: inline-block;
+    min-width: 130px;
+  }
+  .sig-jabatan { font-size: 10pt; margin-top: 2px; }
+
+  /* Print button */
+  .print-btn {
+    position: fixed; top: 16px; right: 16px;
+    background: #1d4ed8; color: #fff;
+    border: none; padding: 10px 22px;
+    border-radius: 8px; font-size: 13px; font-weight: 700;
+    cursor: pointer; z-index: 999;
+    box-shadow: 0 4px 14px rgba(0,0,0,.2);
+  }
+  .print-btn:hover { background:#1e40af; }
+  @media print { .print-btn { display:none; } }
+</style>
+`;
+
+// ──────────────────────────────────────────────────────────────────
+// BUILDING BLOCKS
+// ──────────────────────────────────────────────────────────────────
+function sigBlock(nama, jabatan) {
+  return `<div class="sig-block">
+    <div class="sig-space"></div>
+    <div class="sig-line">(${nama || '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})</div>
+    <div class="sig-jabatan">${jabatan}</div>
+  </div>`;
+}
+
+function stokRow(label, f, s, sel) {
+  return `<tr><td>${label}</td><td>${f}</td><td>${s}</td><td>${sel}</td></tr>`;
+}
+
+function stokTable(stok) {
+  return `
+  <table class="stok-tbl">
+    <thead><tr><th>Komponen</th><th>Stok Fisik</th><th>Stok Sistem</th><th>Selisih</th></tr></thead>
+    <tbody>
+      ${stokRow('Sandal',       stok.sandal.f, stok.sandal.s, stok.sandal.sel)}
+      ${stokRow('Shopping Bag', stok.sb.f,     stok.sb.s,     stok.sb.sel)}
+      ${stokRow('Paper Bag',    stok.pb.f,     stok.pb.s,     stok.pb.sel)}
+      ${stokRow('Box Luca Luna',stok.box.f,    stok.box.s,    stok.box.sel)}
+    </tbody>
+  </table>`;
+}
+
+function infoTable(rows) {
+  return `<table class="info-tbl">${rows.map(([l,v]) =>
+    `<tr><td>${l}</td><td>:</td><td>${v}</td></tr>`).join('')}
+  </table>`;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// BA STOCK OPNAME HTML
+// ──────────────────────────────────────────────────────────────────
+function buildSOHtml(d) {
+  const spgSigs = d.spg.map(n => sigBlock(n, 'SPG/B')).join('');
+
+  return `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8">
+  <title>BA SO — ${d.lokasi}</title>${DOC_STYLE}</head><body>
+  <button class="print-btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+  <div class="page">
+
+    <h1 class="doc-title">Berita Acara Stock Opname</h1>
+    <div class="doc-nomor">Nomor : ${d.nomorSO}</div>
+
+    <div class="doc-para">
+      Pada hari ini <strong>${d.hariTanggal}</strong> telah selesai melakukan komparasi
+      data stok fisik vs stok sistem dengan rincian pelaksanaan sebagai berikut :
+    </div>
+
+    ${infoTable([
+      ['Nama Pelaksana',     d.spg[0] || '-'],
+      ['Jabatan',            'SPG/B'],
+      ['Nama Supervisor',    d.toko.as],
+      ['Nama Branch Manager',d.toko.bm],
+      ['Cabang/Area',        d.toko.cabang],
+      ['Lokasi Stock Opname',d.lokasi],
+      ['Tanggal Pelaksanaan',d.tglPelaksanaan],
+      ['Tanggal Cut Off',    d.tglCutOff],
+    ])}
+
+    <div class="doc-para">Adapun hasil dari stock opname antara lain sebagai berikut :</div>
+    ${stokTable(d.stok)}
+
+    <div class="doc-para">
+      Berdasarkan hasil tersebut, seluruh Store Stock Inventory menjadi tanggung jawab Tim Toko
+      yang terdiri dari SPG/B, Area Supervisor, dan Branch Manager sesuai dengan Job Description
+      masing-masing. Sehubungan dengan hasil stock opname di atas, bersama ini kami mengajukan
+      permintaan penyesuaian stok pada sistem sesuai dengan hasil fisik yang telah diperoleh
+      demi kelancaran operasional di lapangan.
+    </div>
+    <div class="doc-para">
+      Demikian Berita Acara Stock Opname ini disusun dengan sebenar-benarnya berdasarkan fakta
+      dan data untuk dipergunakan sebagaimana mestinya dan dengan penuh tanggung jawab.
+    </div>
+
+    <div class="sig-date">${d.lokasi}, ${d.tglPelaksanaan}</div>
+
+    <div class="sig-group-label">Dibuat oleh,</div>
+    <div class="sig-row">${spgSigs}</div>
+
+    <div class="sig-group-label">Pemroses,</div>
+    <div class="sig-row">${sigBlock(d.namaPemroses, d.jabatanPemroses)}</div>
+
+    <div class="sig-group-label">Diketahui oleh,</div>
+    <div class="sig-row">
+      ${sigBlock(d.toko.as, 'Area Supervisor')}
+      ${sigBlock(d.toko.bm, `Branch Manager ${d.toko.cabang}`)}
+    </div>
+
+    <div class="sig-group-label">Menyetujui,</div>
+    <div class="sig-row">
+      ${sigBlock('Dini Tri Mart', 'Operations Manager')}
+      ${sigBlock('Muhammad Fikri', 'General Manager')}
+    </div>
+    <div class="sig-row">
+      ${sigBlock('Steven Eka Halim', 'President Director')}
+    </div>
+
+  </div>
+  </body></html>`;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// BA ADJUSTMENT HTML
+// ──────────────────────────────────────────────────────────────────
+function buildAdjHtml(d) {
+  const spgSigs = d.spg.map(n => sigBlock(n, 'SPG/B')).join('');
+
+  return `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8">
+  <title>BA Adjustment — ${d.lokasi}</title>${DOC_STYLE}</head><body>
+  <button class="print-btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+  <div class="page">
+
+    <h1 class="doc-title">Berita Acara Adjustment</h1>
+    <div class="doc-nomor">Nomor : ${d.nomorAdj}</div>
+
+    <div class="doc-para">
+      Pada hari ini <strong>${d.hariTanggal}</strong> telah selesai dilakukan penyesuaian stok
+      di sistem sesuai dengan hasil stok opname dengan rincian sebagai berikut :
+    </div>
+
+    ${infoTable([
+      ['Nama Pelaksana',     d.spg[0] || '-'],
+      ['Jabatan',            'SPG/B'],
+      ['Nama Supervisor',    d.toko.as],
+      ['Nama Branch Manager',d.toko.bm],
+      ['Cabang/Area',        d.toko.cabang],
+      ['Lokasi Stock Opname',d.lokasi],
+      ['Tanggal Pelaksanaan',d.tglPelaksanaan],
+      ['Tanggal Cut Off',    d.tglCutOff],
+      ['Nomor Penyesuaian',  d.noPenyesuaian],
+    ])}
+
+    <div class="doc-para">Adapun hasil dari stock opname antara lain sebagai berikut :</div>
+    ${stokTable(d.stok)}
+
+    <div class="doc-para">
+      Berdasarkan hasil tersebut, stok di sistem telah disesuaikan agar sesuai dengan hasil
+      stok fisik. Apabila di kemudian hari ditemukan selisih, maka menjadi tanggung jawab Tim
+      Toko yang terdiri SPG/B, Area Supervisor, dan Branch Manager sesuai dengan Job Description
+      masing-masing.
+    </div>
+    <div class="doc-para">
+      Demikian Berita Acara Adjustment hasil dari stock opname (penyamaan fisik dan sistem) ini
+      disusun dengan sebenar-benarnya berdasarkan fakta dan data untuk dipergunakan sebagaimana
+      mestinya dan dengan penuh tanggung jawab.
+    </div>
+
+    <div class="sig-date">${d.lokasi}, ${d.tglPelaksanaan}</div>
+
+    <div class="sig-group-label">Pemroses,</div>
+    <div class="sig-row">${sigBlock(d.namaPemroses, d.jabatanPemroses)}</div>
+
+    <div class="sig-group-label">Diketahui oleh,</div>
+    <div class="sig-row">${spgSigs}</div>
+    <div class="sig-row">
+      ${sigBlock(d.toko.as, 'Area Supervisor')}
+      ${sigBlock(d.toko.bm, `Branch Manager ${d.toko.cabang}`)}
+    </div>
+
+    <div class="sig-group-label">Menyetujui,</div>
+    <div class="sig-row">
+      ${sigBlock('Dini Tri Mart', 'Operations Manager')}
+      ${sigBlock('Nur Aulia', 'FAT Manager')}
+    </div>
+    <div class="sig-row">
+      ${sigBlock('Muhammad Fikri', 'General Manager')}
+    </div>
+    <div class="sig-row">
+      ${sigBlock('Steven Eka Halim', 'President Director')}
+    </div>
+
+  </div>
+  </body></html>`;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// OPEN IN NEW WINDOW
+// ──────────────────────────────────────────────────────────────────
+function openDoc(html, title) {
+  const w = window.open('', title, 'width=960,height=780,scrollbars=yes');
+  if (!w) { alert('Pop-up diblokir browser!\nAktifkan pop-up untuk situs ini.'); return; }
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+}
+
+// ──────────────────────────────────────────────────────────────────
+// PUBLIC ACTIONS
+// ──────────────────────────────────────────────────────────────────
+function generateSO() {
+  const raw = getFormData();
+  if (!validate(raw)) return;
+  openDoc(buildSOHtml(buildData(raw)), `BA SO — ${raw.namaToko}`);
+}
+
+function generateAdj() {
+  const raw = getFormData();
+  if (!validate(raw)) return;
+  openDoc(buildAdjHtml(buildData(raw)), `BA Adj — ${raw.namaToko}`);
+}
+
+function generateAll() {
+  const raw = getFormData();
+  if (!validate(raw)) return;
+  const d = buildData(raw);
+  openDoc(buildSOHtml(d),  `BA SO — ${raw.namaToko}`);
+  setTimeout(() => openDoc(buildAdjHtml(d), `BA Adj — ${raw.namaToko}`), 600);
+}
+
+</script>
+</body>
+</html>
