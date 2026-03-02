@@ -440,6 +440,8 @@ const PEMROSES_DATA = {
 // Region ordering for optgroup
 const REGION_ORDER = ['JATIM', 'JAKARTA', 'BALI', 'SULAWESI', 'BATAM'];
 
+let articleRowId = 0;
+
 // Populate dropdowns
 (function init() {
   const tSel = document.getElementById('toko');
@@ -503,7 +505,7 @@ function onLevelChange() {
 // ──────────────────────────────────────────────────────────────────
 // ARTICLE TABLE (Level 1) — Dynamic Rows
 // ──────────────────────────────────────────────────────────────────
-let articleRowId = 0;
+// (moved articleRowId declaration above IIFE)
 
 function addArticleRow() {
   const tbody = document.getElementById('articleBody');
