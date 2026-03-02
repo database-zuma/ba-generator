@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generator Berita Acara — Zuma Jatim</title>
+  <title>Generator Berita Acara — Zuma</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -184,7 +184,7 @@
   <div class="header">
     <div class="header-logo">ZUMA</div>
     <div class="header-text">
-      <h1>Generator Berita Acara — Jatim</h1>
+      <h1>Generator Berita Acara</h1>
       <p>Stock Opname &amp; Adjustment · Isi form → klik tombol → cetak PDF</p>
     </div>
   </div>
@@ -264,17 +264,48 @@
 // DATA MASTER
 // ──────────────────────────────────────────────────────────────────
 const TOKO = {
-  'TUNJUNGAN PLAZA': { spg: ['Fahriyatul Auliyah', 'Diah Dwipriliawati', 'Naura Yumna Devani'],         as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
-  'GALAXY MALL':     { spg: ['Nana Nurdiana', 'Pricillia Alexandri'],                                  as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
-  'PTC':             { spg: ['Ratna Yunita', 'Luvita Chatharina Sihombing'],                            as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
-  'MATOS':           { spg: ['Herlinata Sholikhati', 'Vela Rodhiana'],                                  as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
-  'MOG':             { spg: ['Yayuk Kritianingsih', 'Dilla Rahma Safira'],                              as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
-  'LIPPO BATU':      { spg: ['Tarina Rahman', "Muhammad Dhiya'ul Hak Al Badar"],                       as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
-  'LIPPO SIDOARJO':  { spg: ['Bella Aprilia', 'Laily Wahyu Annisa', 'Fariansyah Satrio Pangestu'],     as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
-  'ROYAL PLAZA':     { spg: ['Sarah Amelia', 'Putri Aida Permatasari'],                                 as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
-  'ICON GRESIK':     { spg: ['Neng Massila', 'Siti Nuryunidha Marsha'],                                 as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
-  'CITO':            { spg: ['Raditya Fian Fathur Rahman', 'Reghyta Orlin'],                            as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
-  'SUNRISE MALL':    { spg: ['Vinda Kurnia Rahmawati', 'Gaby Aprillia Grazeila'],                       as: 'Ninik Yuni Purwanti', bm: 'Kusdiyaningsih', cabang: 'JATIM' },
+  // ─── JATIM ─────────────────────────────────────────────────
+  'TUNJUNGAN PLAZA':  { spg: ['Fahriyatul Auliyah', 'Diah Dwipriliawati', 'Naura Yumna Devani'],           as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Surabaya' },
+  'GALAXY MALL':      { spg: ['Nana Nurdiana', 'Pricillia Alexandri'],                                     as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Surabaya' },
+  'PTC':              { spg: ['Ratna Yunita', 'Luvita Chatharina Sihombing'],                               as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Surabaya' },
+  'MATOS':            { spg: ['Herlinata Sholikhati', 'Vela Rodhiana'],                                     as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Malang' },
+  'MOG':              { spg: ['Yayuk Kritianingsih', 'Dilla Rahma Safira'],                                 as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Malang' },
+  'LIPPO BATU':       { spg: ['Tarina Rahman', "Muhammad Dhiya'ul Hak Al Badar"],                          as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Malang' },
+  'LIPPO SIDOARJO':   { spg: ['Bella Aprilia', 'Laily Wahyu Annisa', 'Fariansyah Satrio Pangestu'],         as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Sidoarjo' },
+  'ROYAL PLAZA':      { spg: ['Sarah Amelia', 'Putri Aida Permatasari'],                                    as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Surabaya' },
+  'ICON GRESIK':      { spg: ['Neng Massila', 'Siti Nuryunidha Marsha'],                                    as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Gresik' },
+  'CITO':             { spg: ['Raditya Fian Fathur Rahman', 'Reghyta Orlin'],                               as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Surabaya' },
+  'SUNRISE MALL':     { spg: ['Vinda Kurnia Rahmawati', 'Gaby Aprillia Grazeila'],                          as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Mojokerto' },
+
+  // ─── BALI ──────────────────────────────────────────────────
+  'TABANAN':          { spg: ['Ni Luh Putu Windayani', 'Ni Kadek Vira Nari Antini', 'Ni Made Ida Lestari'],                       as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'BATUBULAN':        { spg: [],                                                                                                    as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'KAPAL':            { spg: ['Dewa Ayu Putu Manik Krisnauli', 'Ni Kadek Ayu Winda Yulianti', 'Ni Made Ayu Damayanti'],            as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'JEMBRANA':         { spg: ['Ida Bagus Adi Purwa Jaya', 'Ida Ayu Putu Purnami Asih'],                                           as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'LEVEL 21':         { spg: ['Ni Luh Ayu Tantri', 'Ni Kadek Jelita'],                                                            as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'BAJERA':           { spg: ['Ni Kadek Iin Intan Sari', 'Ni Putu Ratna Dewi'],                                                   as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'PEGUYANGAN':       { spg: ['Kadek Dina Novia', 'Ni Made Yuni Asari Rahayu'],                                                   as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'PENATIH':          { spg: ['Ni Komang Puja Astrini', 'Ni Wayan Ika Okta Rini Adnyani P'],                                      as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'MONANG MANING':    { spg: ['Intan Maharani', 'Anak Agung Istri Ratu Candrakanti', 'Ni Made Dea Paramita Sari', 'Victoria Jennifer Madu'], as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'GIANYAR':          { spg: ['Ni Putu Diah Lestari', 'Luh Sri Paramita', 'Ni Made Dwiyanti'],                                    as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'DALUNG':           { spg: ['Ayu Imelda Wijayanti', 'Ni Komang Ayu Tri Widiantari', 'Ni Luh Novita Florri'],                    as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'KLUNGKUNG':        { spg: ['Ni Kadek Sintya Okta Viani', 'Ni Komang Ayu Oktaviani', 'Ni Nyoman Asaka Putri'],                  as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'LIVING WORLD':     { spg: ['Ni Made Sintya Prana Dewi', 'Ni Made Lia Wulandari', 'Ni Putu Alia Putri Pradnyani', 'Viona Septiani'], as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'KARANGASEM':       { spg: ['Ni Putu Niadinayani', 'Ni Kadek Pebriani'],                                                        as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'ICON MALL BALI':   { spg: ['Bernadeta Yuliana Intan Putri Andayani', 'Ketut Ayu Arini'],                                       as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'BANGLI':           { spg: ['Ni Luh Putu Eka Yuliantini', 'Ni Luh Desiani'],                                                    as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'PEMOGAN':          { spg: ['Ni Komang Ratih Widi Wahyuni', 'Claudia Fajariyanti'],                                              as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'LIPPO BALI':       { spg: ['Yulisa Yan Azalia', 'Elby Margareta'],                                                             as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'PELIATAN':         { spg: ['Ni Made Dean Junianthini Putri', 'Ni Made Dwi Kasari'],                                             as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'PANJER':           { spg: ['Ni Putu Henny Mahayoni', 'Dwi Yuliani Irianti'],                                                   as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'SINGARAJA':        { spg: ['Putu Martayani', 'Made Dinda Amelia Sari'],                                                         as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'MBG':              { spg: ['Kadek Yuni Novianty', 'Denada Fitri Kartika'],                                                     as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'KESIMAN':          { spg: ['Maria Enita Eren', 'Ni Kadek Ayu Sanjiwani'],                                                      as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'ULUWATU':          { spg: ['Ni Kadek Dwi Ana Defi', 'Yuvantika Happy Maylia'],                                                 as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'SERIRIT':          { spg: ['Komang Astri', 'Ni Putu Purnama Yanti'],                                                           as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'KEDONGANAN':       { spg: ['Zakya Rahmadani', 'Ni Kadek Nopriyanti'],                                                          as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'UBUD':             { spg: ['Ni Komang Aprilia', 'Ni Nyoman Sintiya Maharani'],                                                  as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+  'LEBAH PELIATAN':   { spg: ['Ni Luh Made Setiawati', 'Ni Luh Vira Agustini'],                                                   as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
 };
 
 const PEMROSES_DATA = {
@@ -285,7 +316,21 @@ const PEMROSES_DATA = {
 // Populate dropdowns
 (function init() {
   const tSel = document.getElementById('toko');
-  Object.keys(TOKO).forEach(n => tSel.insertAdjacentHTML('beforeend', `<option value="${n}">${n}</option>`));
+  const groups = {};
+  Object.entries(TOKO).forEach(([name, data]) => {
+    if (!groups[data.cabang]) groups[data.cabang] = [];
+    groups[data.cabang].push(name);
+  });
+  Object.entries(groups).forEach(([cabang, stores]) => {
+    const og = document.createElement('optgroup');
+    og.label = cabang;
+    stores.forEach(n => {
+      const opt = document.createElement('option');
+      opt.value = n; opt.textContent = n;
+      og.appendChild(opt);
+    });
+    tSel.appendChild(og);
+  });
   const pSel = document.getElementById('pemroses');
   Object.keys(PEMROSES_DATA).forEach(n => pSel.insertAdjacentHTML('beforeend', `<option value="${n}">${n}</option>`));
 })();
@@ -346,8 +391,9 @@ function buildData(d) {
   const toko = TOKO[d.namaToko];
   const { bulan, tahun } = getBulanTahun(d.tglPelaksanaan);
   const lokasi = 'Zuma ' + toTitleCase(d.namaToko);
+  const kota = toko.kota || lokasi;
   return {
-    toko, lokasi,
+    toko, lokasi, kota,
     spg: toko.spg,
     nomorSO:  `${d.nomorUrut}/BASO/RETAIL/DDD/${bulan}/${tahun}`,
     nomorAdj: `${d.nomorUrut}/BAA/RETAIL/DDD/${bulan}/${tahun}`,
@@ -525,7 +571,7 @@ function buildSOHtml(d) {
       dan data untuk dipergunakan sebagaimana mestinya dan dengan penuh tanggung jawab.
     </div>
 
-    <div class="sig-date">${d.lokasi}, ${d.tglPelaksanaan}</div>
+    <div class="sig-date">${d.kota}, ${d.tglPelaksanaan}</div>
 
     <div class="sig-group-label">Dibuat oleh,</div>
     <div class="sig-row">${spgSigs}</div>
@@ -598,7 +644,7 @@ function buildAdjHtml(d) {
       mestinya dan dengan penuh tanggung jawab.
     </div>
 
-    <div class="sig-date">${d.lokasi}, ${d.tglPelaksanaan}</div>
+    <div class="sig-date">${d.kota}, ${d.tglPelaksanaan}</div>
 
     <div class="sig-group-label">Pemroses,</div>
     <div class="sig-row">${sigBlock(d.namaPemroses, d.jabatanPemroses)}</div>
