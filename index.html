@@ -123,7 +123,8 @@
       font-size: 13px;
       color: #111827;
     }
-    .stok-table input[type=number] {
+    .stok-table input[type=number],
+    .stok-table input[type=text] {
       width: 100%;
       padding: 7px 8px;
       border: 1.5px solid #d1d5db;
@@ -132,11 +133,82 @@
       text-align: center;
       background: #fffbeb;
     }
-    .stok-table input[type=number]:focus {
+    .stok-table input[type=number]:focus,
+    .stok-table input[type=text]:focus {
       outline: none;
       border-color: #6366f1;
       box-shadow: 0 0 0 2px rgba(99,102,241,.1);
     }
+
+    /* ── ARTICLE TABLE (Level 1) ── */
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+    .article-table th {
+      background: #f3f4f6;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: #4b5563;
+      text-align: center;
+      border: 1px solid #e5e7eb;
+    }
+    .article-table td {
+      border: 1px solid #e5e7eb;
+      padding: 5px 8px;
+    }
+    .article-table input {
+      width: 100%;
+      padding: 7px 8px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 7px;
+      font-size: 13px;
+      background: #fffbeb;
+    }
+    .article-table input[type=number] { text-align: center; }
+    .article-table input[type=text] { text-align: left; }
+    .article-table input:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99,102,241,.1);
+    }
+    .article-table .selisih-cell {
+      text-align: center;
+      font-weight: 600;
+      font-size: 13px;
+      color: #111827;
+    }
+    .btn-remove-row {
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background .15s;
+    }
+    .btn-remove-row:hover { background: #fecaca; }
+    .btn-add-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: #eef2ff;
+      color: #4f46e5;
+      border: 1.5px dashed #a5b4fc;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-add-row:hover { background: #e0e7ff; }
 
     /* ── BUTTONS ── */
     .btn-group {
@@ -146,6 +218,7 @@
       margin-top: 28px;
     }
     .btn-all { grid-column: 1 / -1; }
+    .btn-single { grid-column: 1 / -1; }
     .btn {
       padding: 13px 16px;
       border: none;
@@ -162,6 +235,7 @@
     .btn-so  { background: linear-gradient(135deg,#3b82f6,#1d4ed8); color:#fff; }
     .btn-adj { background: linear-gradient(135deg,#10b981,#059669); color:#fff; }
     .btn-all-style { background: linear-gradient(135deg,#f59e0b,#d97706); color:#fff; }
+    .btn-l1  { background: linear-gradient(135deg,#8b5cf6,#6d28d9); color:#fff; }
 
     .note {
       margin-top: 20px;
@@ -171,9 +245,8 @@
       line-height: 1.6;
     }
 
-    /* ═══════════════════════════════════════════════
-       PRINT / DOCUMENT STYLES (dipakai di popup)
-    ═══════════════════════════════════════════════ */
+    /* ── HIDE/SHOW SECTIONS ── */
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
@@ -196,6 +269,15 @@
     <div class="section-title">📌 Informasi Pelaksanaan</div>
 
     <div class="form-row">
+      <label>Level SO</label>
+      <select id="levelSO" onchange="onLevelChange()">
+        <option value="">— Pilih Level —</option>
+        <option value="1">Level 1</option>
+        <option value="3">Level 3</option>
+        <option value="4">Level 4</option>
+      </select>
+    </div>
+    <div class="form-row">
       <label>Toko</label>
       <select id="toko"><option value="">— Pilih Toko —</option></select>
     </div>
@@ -216,38 +298,64 @@
       <input type="text" id="nomorUrut" placeholder="Contoh: 001" />
     </div>
 
-    <!-- Hasil SO -->
-    <div class="section-title">📊 Hasil Stock Opname</div>
-
-    <table class="stok-table">
-      <thead>
-        <tr>
-          <th style="width:42%">Komponen</th>
-          <th>Stok Fisik</th>
-          <th>Stok Sistem</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Sandal</td>       <td><input type="number" id="fSandal" value="0" min="0"/></td><td><input type="number" id="sSandal" value="0" min="0"/></td></tr>
-        <tr><td>Shopping Bag</td> <td><input type="number" id="fSB"     value="0" min="0"/></td><td><input type="number" id="sSB"     value="0" min="0"/></td></tr>
-        <tr><td>Paper Bag</td>    <td><input type="number" id="fPB"     value="0" min="0"/></td><td><input type="number" id="sPB"     value="0" min="0"/></td></tr>
-        <tr><td>Box Luca Luna</td><td><input type="number" id="fBox"    value="0" min="0"/></td><td><input type="number" id="sBox"    value="0" min="0"/></td></tr>
-      </tbody>
-    </table>
-
-    <!-- BA Adjustment extra -->
-    <div class="section-title">📝 Khusus BA Adjustment</div>
-
-    <div class="form-row">
+    <!-- Nomor Penyesuaian (Level 3/4 only) -->
+    <div class="form-row hidden" id="sectionNoPenyesuaian">
       <label>Nomor Penyesuaian</label>
       <input type="text" id="noPenyesuaian" placeholder="Nomor dari sistem Accurate" />
     </div>
 
+    <!-- Hasil SO: Komponen (Level 3/4) -->
+    <div id="sectionKomponen" class="hidden">
+      <div class="section-title">📊 Hasil Stock Opname — Komponen</div>
+      <table class="stok-table">
+        <thead>
+          <tr>
+            <th style="width:42%">Komponen</th>
+            <th>Stok Fisik</th>
+            <th>Stok Sistem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Sandal</td>       <td><input type="number" id="fSandal" value="0" min="0"/></td><td><input type="number" id="sSandal" value="0" min="0"/></td></tr>
+          <tr><td>Shopping Bag</td> <td><input type="number" id="fSB"     value="0" min="0"/></td><td><input type="number" id="sSB"     value="0" min="0"/></td></tr>
+          <tr><td>Paper Bag</td>    <td><input type="number" id="fPB"     value="0" min="0"/></td><td><input type="number" id="sPB"     value="0" min="0"/></td></tr>
+          <tr><td>Box Luca Luna</td><td><input type="number" id="fBox"    value="0" min="0"/></td><td><input type="number" id="sBox"    value="0" min="0"/></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Hasil SO: Artikel (Level 1) -->
+    <div id="sectionArtikel" class="hidden">
+      <div class="section-title">📊 Selisih Stock Opname Level 1 — Per Artikel</div>
+      <table class="article-table" id="articleTable">
+        <thead>
+          <tr>
+            <th style="width:18%">Kode Artikel</th>
+            <th style="width:32%">Nama Artikel</th>
+            <th style="width:15%">Stok Fisik</th>
+            <th style="width:15%">Stok Sistem</th>
+            <th style="width:12%">Selisih</th>
+            <th style="width:8%"></th>
+          </tr>
+        </thead>
+        <tbody id="articleBody">
+        </tbody>
+      </table>
+      <button class="btn-add-row" onclick="addArticleRow()">＋ Tambah Baris</button>
+    </div>
+
     <!-- Buttons -->
-    <div class="btn-group">
-      <button class="btn btn-so"  onclick="generateSO()">📄 BA Stock Opname</button>
-      <button class="btn btn-adj" onclick="generateAdj()">📄 BA Adjustment</button>
-      <button class="btn btn-all-style btn-all btn" onclick="generateAll()">🚀 Generate Keduanya Sekaligus</button>
+    <div id="sectionButtons" class="hidden">
+      <!-- L3/L4 Buttons -->
+      <div class="btn-group" id="btnsL34">
+        <button class="btn btn-so"  onclick="generateSO()">📄 BA Stock Opname</button>
+        <button class="btn btn-adj" onclick="generateAdj()">📄 BA Adjustment</button>
+        <button class="btn btn-all-style btn-all btn" onclick="generateAll()">🚀 Generate Keduanya Sekaligus</button>
+      </div>
+      <!-- L1 Button -->
+      <div class="btn-group hidden" id="btnsL1">
+        <button class="btn btn-l1 btn-single" onclick="generateL1()">📄 BA Adjustment Level 1</button>
+      </div>
     </div>
 
     <p class="note">Setelah dokumen terbuka → klik tombol <strong>Cetak / Simpan PDF</strong> atau tekan <strong>Ctrl+P</strong></p>
@@ -277,7 +385,12 @@ const TOKO = {
   'CITO':             { spg: ['Raditya Fian Fathur Rahman', 'Reghyta Orlin'],                               as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Surabaya' },
   'SUNRISE MALL':     { spg: ['Vinda Kurnia Rahmawati', 'Gaby Aprillia Grazeila'],                          as: 'Ninik Yuni', bm: 'Kusdiyaningsih', cabang: 'JATIM', kota: 'Mojokerto' },
 
-  // ─── BALI ──────────────────────────────────────────────────
+  // ─── JAKARTA ───────────────────────────────────────────────
+  'PLUIT VILLAGE':    { spg: ['Tatianisastri Purba', 'Gerry Syefvin Meyfio'],                               as: 'Irpa Aryani', bm: 'Christine Angelina Nawir', cabang: 'JAKARTA', kota: 'Jakarta' },
+  'LMP':              { spg: ['Effendi Cen', 'Elsa Salsabilah Sakinah'],                                    as: 'Irpa Aryani', bm: 'Christine Angelina Nawir', cabang: 'JAKARTA', kota: 'Jakarta' },
+  'BINTARO XCHANGE':  { spg: ['Asakha Nandhitta Sami', 'Via Amanda'],                                      as: 'Irpa Aryani', bm: 'Christine Angelina Nawir', cabang: 'JAKARTA', kota: 'Jakarta' },
+
+  // ─── BALI (AS: Wempy Tranggono) ────────────────────────────
   'TABANAN':          { spg: ['Ni Luh Putu Windayani', 'Ni Kadek Vira Nari Antini', 'Ni Made Ida Lestari'],                       as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'BATUBULAN':        { spg: [],                                                                                                    as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'KAPAL':            { spg: ['Dewa Ayu Putu Manik Krisnauli', 'Ni Kadek Ayu Winda Yulianti', 'Ni Made Ayu Damayanti'],            as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
@@ -287,6 +400,8 @@ const TOKO = {
   'PEGUYANGAN':       { spg: ['Kadek Dina Novia', 'Ni Made Yuni Asari Rahayu'],                                                   as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'PENATIH':          { spg: ['Ni Komang Puja Astrini', 'Ni Wayan Ika Okta Rini Adnyani P'],                                      as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'MONANG MANING':    { spg: ['Intan Maharani', 'Anak Agung Istri Ratu Candrakanti', 'Ni Made Dea Paramita Sari', 'Victoria Jennifer Madu'], as: 'Wempy Tranggono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+
+  // ─── BALI (AS: Budiono) ────────────────────────────────────
   'GIANYAR':          { spg: ['Ni Putu Diah Lestari', 'Luh Sri Paramita', 'Ni Made Dwiyanti'],                                    as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'DALUNG':           { spg: ['Ayu Imelda Wijayanti', 'Ni Komang Ayu Tri Widiantari', 'Ni Luh Novita Florri'],                    as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'KLUNGKUNG':        { spg: ['Ni Kadek Sintya Okta Viani', 'Ni Komang Ayu Oktaviani', 'Ni Nyoman Asaka Putri'],                  as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
@@ -296,6 +411,8 @@ const TOKO = {
   'BANGLI':           { spg: ['Ni Luh Putu Eka Yuliantini', 'Ni Luh Desiani'],                                                    as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'PEMOGAN':          { spg: ['Ni Komang Ratih Widi Wahyuni', 'Claudia Fajariyanti'],                                              as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'LIPPO BALI':       { spg: ['Yulisa Yan Azalia', 'Elby Margareta'],                                                             as: 'Budiono', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+
+  // ─── BALI (AS: Amanda Hani) ────────────────────────────────
   'PELIATAN':         { spg: ['Ni Made Dean Junianthini Putri', 'Ni Made Dwi Kasari'],                                             as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'PANJER':           { spg: ['Ni Putu Henny Mahayoni', 'Dwi Yuliani Irianti'],                                                   as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'SINGARAJA':        { spg: ['Putu Martayani', 'Made Dinda Amelia Sari'],                                                         as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
@@ -306,12 +423,22 @@ const TOKO = {
   'KEDONGANAN':       { spg: ['Zakya Rahmadani', 'Ni Kadek Nopriyanti'],                                                          as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'UBUD':             { spg: ['Ni Komang Aprilia', 'Ni Nyoman Sintiya Maharani'],                                                  as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
   'LEBAH PELIATAN':   { spg: ['Ni Luh Made Setiawati', 'Ni Luh Vira Agustini'],                                                   as: 'Amanda Hani', bm: 'Bastomi Hartanto', cabang: 'BALI', kota: 'Bali' },
+
+  // ─── SULAWESI ──────────────────────────────────────────────
+  'MEGAMALL MANADO':  { spg: ['Kleymen Megawati Tutu', 'Frains Waluyo'],                                                          as: 'Dian Rinda', bm: '-', cabang: 'SULAWESI', kota: 'Manado' },
+
+  // ─── BATAM ─────────────────────────────────────────────────
+  'NAGOYA HILLS':     { spg: ['Rahmadani', 'Ivena Sacqueline'],                                                                   as: '-', bm: 'Arvina Jayadi', cabang: 'BATAM', kota: 'Batam' },
+  'K-SQUARE MALL BATAM': { spg: ['Vetty Lasdiana Nasution', 'Auliazahra Shellamtiha'],                                            as: '-', bm: 'Arvina Jayadi', cabang: 'BATAM', kota: 'Batam' },
 };
 
 const PEMROSES_DATA = {
-  'Galuh Maharani':      'Staff Inventory Control',
-  'Nabila Amalia Putri': 'Staff Inventory Control',
+  'Galuh Maharani':      'Inventory and Compliance Audit Staff',
+  'Nabila Amalia Putri': 'Inventory and Compliance Audit Staff',
 };
+
+// Region ordering for optgroup
+const REGION_ORDER = ['JATIM', 'JAKARTA', 'BALI', 'SULAWESI', 'BATAM'];
 
 // Populate dropdowns
 (function init() {
@@ -321,10 +448,11 @@ const PEMROSES_DATA = {
     if (!groups[data.cabang]) groups[data.cabang] = [];
     groups[data.cabang].push(name);
   });
-  Object.entries(groups).forEach(([cabang, stores]) => {
+  REGION_ORDER.forEach(cabang => {
+    if (!groups[cabang]) return;
     const og = document.createElement('optgroup');
     og.label = cabang;
-    stores.forEach(n => {
+    groups[cabang].forEach(n => {
       const opt = document.createElement('option');
       opt.value = n; opt.textContent = n;
       og.appendChild(opt);
@@ -333,7 +461,92 @@ const PEMROSES_DATA = {
   });
   const pSel = document.getElementById('pemroses');
   Object.keys(PEMROSES_DATA).forEach(n => pSel.insertAdjacentHTML('beforeend', `<option value="${n}">${n}</option>`));
+
+  // Init article table with 4 empty rows
+  for (let i = 0; i < 4; i++) addArticleRow();
 })();
+
+// ──────────────────────────────────────────────────────────────────
+// LEVEL CHANGE HANDLER
+// ──────────────────────────────────────────────────────────────────
+function onLevelChange() {
+  const level = document.getElementById('levelSO').value;
+  const sKomponen       = document.getElementById('sectionKomponen');
+  const sArtikel        = document.getElementById('sectionArtikel');
+  const sNoPenyesuaian  = document.getElementById('sectionNoPenyesuaian');
+  const sButtons        = document.getElementById('sectionButtons');
+  const btnsL34         = document.getElementById('btnsL34');
+  const btnsL1          = document.getElementById('btnsL1');
+
+  // Reset all
+  sKomponen.classList.add('hidden');
+  sArtikel.classList.add('hidden');
+  sNoPenyesuaian.classList.add('hidden');
+  sButtons.classList.add('hidden');
+  btnsL34.classList.add('hidden');
+  btnsL1.classList.add('hidden');
+
+  if (!level) return;
+
+  sButtons.classList.remove('hidden');
+
+  if (level === '1') {
+    sArtikel.classList.remove('hidden');
+    btnsL1.classList.remove('hidden');
+  } else {
+    sKomponen.classList.remove('hidden');
+    sNoPenyesuaian.classList.remove('hidden');
+    btnsL34.classList.remove('hidden');
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
+// ARTICLE TABLE (Level 1) — Dynamic Rows
+// ──────────────────────────────────────────────────────────────────
+let articleRowId = 0;
+
+function addArticleRow() {
+  const tbody = document.getElementById('articleBody');
+  const id = articleRowId++;
+  const tr = document.createElement('tr');
+  tr.id = `artRow_${id}`;
+  tr.innerHTML = `
+    <td><input type="text" id="artKode_${id}" placeholder="ZM-..." /></td>
+    <td><input type="text" id="artNama_${id}" placeholder="Nama artikel" /></td>
+    <td><input type="number" id="artFisik_${id}" value="0" min="0" oninput="calcSelisih(${id})" /></td>
+    <td><input type="number" id="artSistem_${id}" value="0" min="0" oninput="calcSelisih(${id})" /></td>
+    <td class="selisih-cell" id="artSel_${id}">0</td>
+    <td style="text-align:center"><button class="btn-remove-row" onclick="removeArticleRow(${id})">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+}
+
+function removeArticleRow(id) {
+  const row = document.getElementById(`artRow_${id}`);
+  if (row) row.remove();
+}
+
+function calcSelisih(id) {
+  const f = parseInt(document.getElementById(`artFisik_${id}`).value) || 0;
+  const s = parseInt(document.getElementById(`artSistem_${id}`).value) || 0;
+  document.getElementById(`artSel_${id}`).textContent = f - s;
+}
+
+function getArticleRows() {
+  const tbody = document.getElementById('articleBody');
+  const rows = [];
+  tbody.querySelectorAll('tr').forEach(tr => {
+    const id = tr.id.replace('artRow_', '');
+    const kode  = (document.getElementById(`artKode_${id}`)  || {}).value || '';
+    const nama  = (document.getElementById(`artNama_${id}`)  || {}).value || '';
+    const fisik = parseInt((document.getElementById(`artFisik_${id}`)  || {}).value) || 0;
+    const sistem= parseInt((document.getElementById(`artSistem_${id}`) || {}).value) || 0;
+    if (kode.trim() || nama.trim()) {
+      rows.push({ kode: kode.trim(), nama: nama.trim(), fisik, sistem, selisih: fisik - sistem });
+    }
+  });
+  return rows;
+}
 
 // ──────────────────────────────────────────────────────────────────
 // HELPERS
@@ -342,8 +555,7 @@ const HARI  = ['Minggu','Senin','Selasa','Rabu','Kamis',"Jum'at",'Sabtu'];
 const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 
 function parseDate(str) {
-  const d = new Date(str + 'T00:00:00');
-  return d;
+  return new Date(str + 'T00:00:00');
 }
 function fmtHariTgl(str) {
   const d = parseDate(str);
@@ -365,6 +577,7 @@ function val(id) { return document.getElementById(id).value; }
 
 function getFormData() {
   return {
+    level:          val('levelSO'),
     namaToko:       val('toko').trim().toUpperCase(),
     namaPemroses:   val('pemroses').trim(),
     tglPelaksanaan: val('tglPelaksanaan'),
@@ -379,6 +592,7 @@ function getFormData() {
 }
 
 function validate(d) {
+  if (!d.level)          { alert('⚠️ Pilih Level SO terlebih dahulu!'); return false; }
   if (!d.namaToko)       { alert('⚠️ Pilih Toko terlebih dahulu!'); return false; }
   if (!d.namaPemroses)   { alert('⚠️ Pilih Pemroses terlebih dahulu!'); return false; }
   if (!d.tglPelaksanaan) { alert('⚠️ Isi Tanggal Pelaksanaan!'); return false; }
@@ -394,14 +608,16 @@ function buildData(d) {
   const kota = toko.kota || lokasi;
   return {
     toko, lokasi, kota,
+    level: d.level,
     spg: toko.spg,
     nomorSO:  `${d.nomorUrut}/BASO/RETAIL/DDD/${bulan}/${tahun}`,
     nomorAdj: `${d.nomorUrut}/BAA/RETAIL/DDD/${bulan}/${tahun}`,
+    nomorL1:  `${d.nomorUrut}/BAA-L1/RETAIL/DDD/${bulan}/${tahun}`,
     hariTanggal:    fmtHariTgl(d.tglPelaksanaan),
     tglPelaksanaan: fmtTgl(d.tglPelaksanaan),
     tglCutOff:      d.tglCutOff ? fmtTgl(d.tglCutOff) : '-',
     namaPemroses:   d.namaPemroses,
-    jabatanPemroses: PEMROSES_DATA[d.namaPemroses] || 'Staff Inventory Control',
+    jabatanPemroses: PEMROSES_DATA[d.namaPemroses] || 'Inventory and Compliance Audit Staff',
     noPenyesuaian:  d.noPenyesuaian || '-',
     stok: {
       sandal: { f: d.fSandal, s: d.sSandal, sel: d.fSandal - d.sSandal },
@@ -463,18 +679,30 @@ const DOC_STYLE = `
   .stok-tbl th { background: #f0f0f0; font-weight: bold; }
   .stok-tbl td:first-child { text-align: left; }
 
+  /* Article table (Level 1) */
+  .art-tbl { width:100%; border-collapse:collapse; margin-bottom:16px; }
+  .art-tbl th, .art-tbl td {
+    border: 1px solid #000;
+    padding: 5px 8px;
+    font-size: 10.5pt;
+  }
+  .art-tbl th { background: #f0f0f0; font-weight: bold; text-align: center; }
+  .art-tbl td { text-align: center; }
+  .art-tbl td:first-child,
+  .art-tbl td:nth-child(2) { text-align: left; }
+
   /* Signatures */
   .sig-date { text-align: right; margin: 18px 0 16px; font-size: 10.5pt; }
   .sig-group-label { font-weight: bold; font-size: 10.5pt; margin-bottom: 4px; }
-  .sig-row { display: flex; gap: 28px; margin-bottom: 22px; flex-wrap: wrap; }
-  .sig-block { text-align: center; min-width: 130px; }
+  .sig-row { display: flex; justify-content: center; gap: 40px; margin-bottom: 22px; flex-wrap: wrap; }
+  .sig-block { text-align: center; min-width: 150px; }
   .sig-space { height: 54px; }
   .sig-line {
     border-top: 1px solid #000;
     padding-top: 4px;
     font-size: 10pt;
     display: inline-block;
-    min-width: 130px;
+    min-width: 150px;
   }
   .sig-jabatan { font-size: 10pt; margin-top: 2px; }
 
@@ -496,9 +724,10 @@ const DOC_STYLE = `
 // BUILDING BLOCKS
 // ──────────────────────────────────────────────────────────────────
 function sigBlock(nama, jabatan) {
+  const displayName = (!nama || nama === '-') ? '&nbsp;'.repeat(30) : nama;
   return `<div class="sig-block">
     <div class="sig-space"></div>
-    <div class="sig-line">(${nama || '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'})</div>
+    <div class="sig-line">(${displayName})</div>
     <div class="sig-jabatan">${jabatan}</div>
   </div>`;
 }
@@ -520,6 +749,17 @@ function stokTable(stok) {
   </table>`;
 }
 
+function articleTable(articles) {
+  const rows = articles.map((a, i) =>
+    `<tr><td>${a.kode}</td><td>${a.nama}</td><td>${a.fisik}</td><td>${a.sistem}</td><td>${a.selisih}</td></tr>`
+  ).join('');
+  return `
+  <table class="art-tbl">
+    <thead><tr><th>Kode Artikel</th><th>Nama Artikel</th><th>Stok Fisik</th><th>Stok Sistem</th><th>Selisih</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
 function infoTable(rows) {
   return `<table class="info-tbl">${rows.map(([l,v]) =>
     `<tr><td>${l}</td><td>:</td><td>${v}</td></tr>`).join('')}
@@ -527,10 +767,12 @@ function infoTable(rows) {
 }
 
 // ──────────────────────────────────────────────────────────────────
-// BA STOCK OPNAME HTML
+// TEMPLATE A: BA STOCK OPNAME (Level 3/4 only)
 // ──────────────────────────────────────────────────────────────────
 function buildSOHtml(d) {
-  const spgSigs = d.spg.map(n => sigBlock(n, 'SPG/B')).join('');
+  const spgSigs = d.spg.length > 0
+    ? d.spg.map(n => sigBlock(n, 'SPG/B')).join('')
+    : sigBlock('-', 'SPG/B');
 
   return `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8">
   <title>BA SO — ${d.lokasi}</title>${DOC_STYLE}</head><body>
@@ -599,10 +841,12 @@ function buildSOHtml(d) {
 }
 
 // ──────────────────────────────────────────────────────────────────
-// BA ADJUSTMENT HTML
+// TEMPLATE B: BA ADJUSTMENT (Level 3/4 only)
 // ──────────────────────────────────────────────────────────────────
 function buildAdjHtml(d) {
-  const spgSigs = d.spg.map(n => sigBlock(n, 'SPG/B')).join('');
+  const spgSigs = d.spg.length > 0
+    ? d.spg.map(n => sigBlock(n, 'SPG/B')).join('')
+    : sigBlock('-', 'SPG/B');
 
   return `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8">
   <title>BA Adjustment — ${d.lokasi}</title>${DOC_STYLE}</head><body>
@@ -673,6 +917,69 @@ function buildAdjHtml(d) {
 }
 
 // ──────────────────────────────────────────────────────────────────
+// TEMPLATE C: BA ADJUSTMENT SO LEVEL 1
+// ──────────────────────────────────────────────────────────────────
+function buildL1Html(d, articles) {
+  const spgSigs = d.spg.length > 0
+    ? d.spg.map(n => sigBlock(n, 'SPG/B')).join('')
+    : sigBlock('-', 'SPG/B');
+
+  return `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8">
+  <title>BA Adj L1 — ${d.lokasi}</title>${DOC_STYLE}</head><body>
+  <button class="print-btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+  <div class="page">
+
+    <h1 class="doc-title">Berita Acara Adjustment Stock Opname Level 1</h1>
+    <div class="doc-nomor">Nomor : ${d.nomorL1}</div>
+
+    <div class="doc-para">
+      Pada hari ini <strong>${d.hariTanggal}</strong> telah selesai dilakukan Stock Opname Level 1
+      dengan rincian sebagai berikut:
+    </div>
+
+    ${infoTable([
+      ['Nama Pelaksana',     d.spg[0] || '-'],
+      ['Jabatan',            'SPG/B'],
+      ['Nama Supervisor',    d.toko.as],
+      ['Nama Branch Manager',d.toko.bm],
+      ['Cabang/Area',        d.toko.cabang],
+      ['Lokasi Stock Opname',d.lokasi],
+      ['Tanggal Pelaksanaan',d.tglPelaksanaan],
+      ['Tanggal Cut Off',    d.tglCutOff],
+    ])}
+
+    <div class="doc-para">Adapun selisih dari hasil stock opname level 1 antara lain sebagai berikut :</div>
+    ${articleTable(articles)}
+
+    <div class="doc-para">
+      Berdasarkan hasil tersebut, stok di sistem telah disesuaikan agar sesuai dengan hasil
+      stok fisik. Apabila di kemudian hari ditemukan selisih, maka menjadi tanggung jawab Tim
+      Toko yang terdiri SPG/B, Area Supervisor, dan Branch Manager sesuai dengan Job Description
+      masing-masing.
+    </div>
+    <div class="doc-para">
+      Demikian Berita Acara Adjustment hasil dari stock opname (penyamaan fisik dan sistem) ini
+      disusun dengan sebenar-benarnya berdasarkan fakta dan data untuk dipergunakan sebagaimana
+      mestinya dan dengan penuh tanggung jawab.
+    </div>
+
+    <div class="sig-date">${d.kota}, ${d.tglPelaksanaan}</div>
+
+    <div class="sig-group-label">Pemroses,</div>
+    <div class="sig-row">${sigBlock(d.namaPemroses, d.jabatanPemroses)}</div>
+
+    <div class="sig-group-label">Diketahui oleh,</div>
+    <div class="sig-row">${spgSigs}</div>
+    <div class="sig-row">
+      ${sigBlock(d.toko.as, 'Area Supervisor')}
+      ${sigBlock(d.toko.bm, `Branch Manager ${d.toko.cabang}`)}
+    </div>
+
+  </div>
+  </body></html>`;
+}
+
+// ──────────────────────────────────────────────────────────────────
 // OPEN IN NEW WINDOW
 // ──────────────────────────────────────────────────────────────────
 function openDoc(html, title) {
@@ -704,6 +1011,18 @@ function generateAll() {
   const d = buildData(raw);
   openDoc(buildSOHtml(d),  `BA SO — ${raw.namaToko}`);
   setTimeout(() => openDoc(buildAdjHtml(d), `BA Adj — ${raw.namaToko}`), 600);
+}
+
+function generateL1() {
+  const raw = getFormData();
+  if (!validate(raw)) return;
+  const articles = getArticleRows();
+  if (articles.length === 0) {
+    alert('⚠️ Isi minimal 1 baris artikel!');
+    return;
+  }
+  const d = buildData(raw);
+  openDoc(buildL1Html(d, articles), `BA Adj L1 — ${raw.namaToko}`);
 }
 
 </script>
