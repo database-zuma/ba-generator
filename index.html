@@ -803,8 +803,8 @@ const DOC_STYLE = `
   /* Signatures */
   .sig-date { text-align: right; margin: 18px 0 16px; font-size: 10.5pt; }
   .sig-group-label { font-weight: bold; font-size: 10.5pt; margin-bottom: 4px; }
-  .sig-row { display: flex; justify-content: center; gap: 40px; margin-bottom: 22px; flex-wrap: wrap; }
-  .sig-block { text-align: center; min-width: 150px; }
+  .sig-row { display: flex; justify-content: center; gap: 60px; margin-bottom: 28px; flex-wrap: wrap; page-break-inside: avoid; }
+  .sig-block { text-align: center; min-width: 160px; }
   .sig-space { height: 54px; }
   .sig-line {
     border-top: 1px solid #000;
@@ -814,6 +814,31 @@ const DOC_STYLE = `
     min-width: 150px;
   }
   .sig-jabatan { font-size: 10pt; margin-top: 2px; }
+
+  /* Letterhead */
+  .doc-letterhead {
+    width: 100%;
+    border-bottom: 2px solid #000;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .doc-letterhead-text {
+    flex: 1;
+  }
+  .doc-letterhead-company {
+    font-size: 14pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .doc-letterhead-address {
+    font-size: 8.5pt;
+    line-height: 1.5;
+    margin-top: 2px;
+  }
 
   /* Print button */
   .print-btn {
@@ -888,6 +913,17 @@ function buildSOHtml(d) {
   <button class="print-btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
   <div class="page">
 
+    <div class="doc-letterhead">
+      <div class="doc-letterhead-text">
+        <div class="doc-letterhead-company">PT Dream Dare Discover</div>
+        <div class="doc-letterhead-address">
+          Jl. Wiyung Praja Indah Timur I-A No. 2, 2A (Ruko Moca Centra Dian Istana No. C11 02-05)<br>
+          RT.000 RW.000 Wiyung, Wiyung, Kota Surabaya, Jawa Timur<br>
+          Telp: 0343-851080 &nbsp;|&nbsp; Fax: 0343-854688 &nbsp;|&nbsp; www.zuma.id
+        </div>
+      </div>
+    </div>
+
     <h1 class="doc-title">Berita Acara Stock Opname</h1>
     <div class="doc-nomor">Nomor : ${d.nomorSO}</div>
 
@@ -961,6 +997,17 @@ function buildAdjHtml(d) {
   <title>BA Adjustment — ${d.lokasi}</title>${DOC_STYLE}</head><body>
   <button class="print-btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
   <div class="page">
+
+    <div class="doc-letterhead">
+      <div class="doc-letterhead-text">
+        <div class="doc-letterhead-company">PT Dream Dare Discover</div>
+        <div class="doc-letterhead-address">
+          Jl. Wiyung Praja Indah Timur I-A No. 2, 2A (Ruko Moca Centra Dian Istana No. C11 02-05)<br>
+          RT.000 RW.000 Wiyung, Wiyung, Kota Surabaya, Jawa Timur<br>
+          Telp: 0343-851080 &nbsp;|&nbsp; Fax: 0343-854688 &nbsp;|&nbsp; www.zuma.id
+        </div>
+      </div>
+    </div>
 
     <h1 class="doc-title">Berita Acara Adjustment</h1>
     <div class="doc-nomor">Nomor : ${d.nomorAdj}</div>
@@ -1037,6 +1084,17 @@ function buildL1Html(d, articles) {
   <title>BA Adj L1 — ${d.lokasi}</title>${DOC_STYLE}</head><body>
   <button class="print-btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
   <div class="page">
+
+    <div class="doc-letterhead">
+      <div class="doc-letterhead-text">
+        <div class="doc-letterhead-company">PT Dream Dare Discover</div>
+        <div class="doc-letterhead-address">
+          Jl. Wiyung Praja Indah Timur I-A No. 2, 2A (Ruko Moca Centra Dian Istana No. C11 02-05)<br>
+          RT.000 RW.000 Wiyung, Wiyung, Kota Surabaya, Jawa Timur<br>
+          Telp: 0343-851080 &nbsp;|&nbsp; Fax: 0343-854688 &nbsp;|&nbsp; www.zuma.id
+        </div>
+      </div>
+    </div>
 
     <h1 class="doc-title">Berita Acara Adjustment Stock Opname Level 1</h1>
     <div class="doc-nomor">Nomor : ${d.nomorL1}</div>
